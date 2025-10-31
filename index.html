@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>سایت املاک من - شبیه Bayut</title>
+    <style>
+        body { font-family: Arial; background-color: #f4f4f4; padding: 20px; }
+        .search-box { background: white; padding: 20px; border-radius: 10px; text-align: center; margin-bottom: 20px; }
+        input { padding: 10px; margin: 5px; width: 200px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; }
+        .listing { background: white; padding: 15px; margin: 10px 0; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <h1>خوش آمدید به سایت املاک من! 🏠</h1>
+    <p>اینجا می‌تونید خانه، آپارتمان و ویلا پیدا کنید. مثل Bayut، اما ساده‌تر!</p>
+    
+    <div class="search-box">
+        <h2>جستجو کنید:</h2>
+        <input type="text" placeholder="شهر (مثل تهران)" id="city">
+        <input type="number" placeholder="قیمت حداکثر (میلیون تومان)" id="price">
+        <button onclick="search()">جستجو</button>
+    </div>
+    
+    <div id="results">
+        <!-- آگهی‌ها اینجا نشون داده می‌شن -->
+    </div>
+    
+    <script>
+        // لیست آگهی‌های نمونه (تو بعداً می‌تونی تغییر بدی)
+        const listings = [
+            { city: "تهران", price: 5000, title: "آپارتمان ۱۰۰ متری در شمال تهران", desc: "۳ خوابه، نوساز" },
+            { city: "اصفهان", price: 2000, title: "ویلا در郊外", desc: "۲ خوابه، با باغ" },
+            { city: "تهران", price: 8000, title: "خانه لوکس در ونک", desc: "۴ خوابه، پارکینگ" }
+        ];
+        
+        function search() {
+            const city = document.getElementById('city').value.toLowerCase();
+            const price = parseInt(document.getElementById('price').value) || 999999;
+            let html = '<h2>نتایج جستجو:</h2>';
+            listings.forEach(listing => {
+                if ((city === '' || listing.city.toLowerCase().includes(city)) && listing.price <= price) {
+                    html += `<div class="listing">
+                        <h3>${listing.title}</h3>
+                        <p>${listing.desc}</p>
+                        <p>قیمت: ${listing.price} میلیون تومان - شهر: ${listing.city}</p>
+                    </div>`;
+                }
+            });
+            if (html === '<h2>نتایج جستجو:</h2>') html += '<p>هیچ آگهی پیدا نشد!</p>';
+            document.getElementById('results').innerHTML = html;
+        }
+        
+        // نشون دادن همه آگهی‌ها اولش
+        search();
+    </script>
+</body>
+</html>
